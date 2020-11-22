@@ -8,3 +8,5 @@ COPY docker-config/bashrc /root/.bashrc
 
 WORKDIR /opt/${PROJECT}
 
+RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+RUN ln -s /root/.poetry/bin/poetry /usr/local/bin/
