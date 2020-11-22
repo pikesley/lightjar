@@ -58,3 +58,13 @@ def test_post_lights_gamma_corrected():
     assert response.get_json() == {"colour": [10, 110, 210], "status": "OK"}
     for light in app.lights:
         assert light == [0, 24, 148]
+
+
+def test_recording_of_colour():
+    """Test the colour is recorded in Redis."""
+    client.post(
+        "/lights",
+        data=json.dumps({"colour": [210, 110, 10]}),
+        content_type="application/json",
+    )
+    assert json.loads(app.redis.get("colour")) == [210, 110, 10]

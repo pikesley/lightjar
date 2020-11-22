@@ -1,11 +1,15 @@
+import json
+
 from flask import request
 from flask_api import FlaskAPI
+from redis import Redis
 
 from lib.gamma_correct import gamma_correct
 from lib.utils import get_pixels
 
 app = FlaskAPI(__name__)
 app.lights = get_pixels()
+app.redis = Redis("redis")
 
 
 @app.route("/", methods=["GET"])
@@ -26,4 +30,5 @@ def post_lights():
 
     colour = app.data["colour"]
     app.lights.fill(gamma_correct(colour))
+    app.redis.set("colour", json.dumps(colour))
     return {"colour": colour, "status": "OK"}

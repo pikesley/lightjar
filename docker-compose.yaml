@@ -11,3 +11,6 @@ services:
     - "5000:5000"
     tty: true
     command: tail -f /dev/null
+
+  redis:
+    image: redis
