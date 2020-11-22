@@ -1,6 +1,7 @@
 from flask import request
 from flask_api import FlaskAPI
 
+from lib.gamma_correct import gamma_correct
 from lib.utils import get_pixels
 
 app = FlaskAPI(__name__)
@@ -24,5 +25,5 @@ def post_lights():
         return {"error": "Bad data"}, 422
 
     colour = app.data["colour"]
-    app.lights.fill(colour)
+    app.lights.fill(gamma_correct(colour))
     return {"colour": colour, "status": "OK"}

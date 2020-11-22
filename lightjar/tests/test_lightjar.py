@@ -45,3 +45,16 @@ def test_post_lights():
     assert response.get_json() == {"colour": [255, 0, 0], "status": "OK"}
     for light in app.lights:
         assert light == [255, 0, 0]
+
+
+def test_post_lights_gamma_corrected():
+    """Test setting the lights with gamma-correction."""
+    response = client.post(
+        "/lights",
+        data=json.dumps({"colour": [10, 110, 210]}),
+        content_type="application/json",
+    )
+    assert response.status_code == 200
+    assert response.get_json() == {"colour": [10, 110, 210], "status": "OK"}
+    for light in app.lights:
+        assert light == [0, 24, 148]
