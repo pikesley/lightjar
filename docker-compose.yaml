@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+
+  lightjar:
+    image: pikesley/lightjar
+    volumes:
+    - ./lightjar:/opt/lightjar
+    - ~/.ssh:/root/.ssh
+    ports:
+    - "5000:5000"
+    tty: true
+    command: tail -f /dev/null
